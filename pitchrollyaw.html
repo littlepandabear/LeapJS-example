@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Leap Pitch Roll Yaw</title>
+
+	<script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+
+
+    <script>
+
+		var controllerOptions = {
+			enableGestures:  true
+		};
+		
+		
+		Leap.loop(controllerOptions, function(frame){
+						
+			 var handsCount = frame.hands.length;
+			 var fingerCount = 0;
+			
+			 frame.pointables.forEach(function(pointable){
+			     if(pointable.extended) fingerCount++;
+				 
+			 });
+			 
+			 console.log(handsCount + ","+ fingerCount);
+			  	
+			
+			 for (var i in frame.hands) {
+				 
+	             var hand = frame.hands[i];
+				 
+				 console.log(hand);
+				 
+				 //setup angles
+		         var TO_RAD = Math.PI / 180;
+		         var TO_DEG = 1 / TO_RAD;
+				 var ROLL = Math.round(hand.roll() * TO_DEG);
+				 var PITCH = Math.round(hand.pitch() * TO_DEG);
+				 var YAW = Math.round(hand.yaw() * TO_DEG);
+				 
+				 
+		     	 console.log(ROLL, PITCH, YAW);
+				 
+				 //transforms: https://www.w3schools.com/cssref/css3_pr_transform.asp
+				 
+				 document.getElementById("rotate").style.transform = "rotate("+ROLL+"deg)";
+				 
+				 //var rotation = "rotateX("+ PITCH +"deg) rotateY("+ YAW +"deg) rotateZ("+ -ROLL+"deg)";
+				 //document.getElementById("rotate").style.transform = rotation;
+				 
+			 }
+			 
+			 
+					
+		});
+	
+
+    </script>
+	<style>
+		#rotate{
+			width: 100px;
+			height: 100px;
+			background: green;
+			position: absolute;
+		}
+	</style>
+
+  </head>
+
+  <body>
+	  	  	  
+	  <div id="rotate"></div>
+
+  </body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+	
+</head>
+<body>
+
+	<div id="log"></div>
+
+	<script>
+		
+		// Get the div#log DOM element 
+		var log = document.getElementById('log');
+
+		// Creates our Leap Controller
+		var controller = new Leap.Controller({enableGestures:true});
+
+		// Tells the controller what to do every time it sees a frame
+		controller.on( 'frame' , function( frame ){
+
+		  // Assigning the data to the global frame object
+		  for( var i = 0; i < frame.gestures.length; i++ ){
+
+		    var gesture = frame.gestures[i];
+
+		    var type = gesture.type;
+	
+			console.log(type);
+    
+		    switch( type ){
+      
+		      case "circle":
+				log.innerHTML = type
+		        break;
+        
+		      case "swipe":
+				log.innerHTML = type
+		        break;
+      
+		      case "screenTap":
+				 log.innerHTML = type
+		        break;
+
+		      case "keyTap":
+				log.innerHTML = type
+		        break;
+
+		    }
+
+		  }
+
+		});
+
+		// Get frames by connecting the controller
+		controller.connect();
+	
+	</script>
+	  
+</body>
+</html>
